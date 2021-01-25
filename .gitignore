@@ -1,10 +1,10 @@
-# Compiled class file
+# compiled class files
 *.class
 
-# Log file
+# log files
 *.log
 
-# Package Files #
+# package files
 *.jar
 *.war
 *.nar
@@ -21,3 +21,22 @@ hs_err_pid*
 
 # Ignore Gradle build output directory
 build
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# eclipse specific ignores
+.classpath
+.project
+.metadata
+.settings
+.loadpath
+bin
+tmp
+*.tmp
+
+# locally stored "Eclipse launch configurations"
+*.launch
