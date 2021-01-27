@@ -12,9 +12,9 @@ public interface BotCommand {
 	/**
 	 * The full and fancy name of the command.
 	 * 
-	 * @return The command's name. Basic Discord Markdown formating can be used.
+	 * @return The command's title. Basic Discord Markdown formating can be used.
 	 */
-	String getName();
+	String getTitle();
 	
 	/**
 	 * This method should provide a description of the command that helps the user to use

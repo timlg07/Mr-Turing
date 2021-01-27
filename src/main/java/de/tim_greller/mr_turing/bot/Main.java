@@ -1,5 +1,6 @@
 package de.tim_greller.mr_turing.bot;
 
+import de.tim_greller.mr_turing.bot.commands.TransitionCreationCommand;
 import de.tim_greller.mr_turing.bot.commands.TuringMachineCreationCommand;
 
 /**
@@ -32,8 +33,9 @@ public class Main {
 	private static Bot createBot(String token) {
 		Bot bot = new Bot(token);
 		
-		bot.addCommand(
-				new TuringMachineCreationCommand()
+		bot.addCommands(
+			new TuringMachineCreationCommand(),
+			new TransitionCreationCommand()
 		);
 		
 		return bot;

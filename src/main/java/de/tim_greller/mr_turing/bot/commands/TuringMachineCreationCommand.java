@@ -10,7 +10,7 @@ import discord4j.core.object.entity.Message;
 public class TuringMachineCreationCommand implements BotCommand {
 
 	@Override
-	public String getName() {
+	public String getTitle() {
 		return "New Turing machine";
 	}
 
