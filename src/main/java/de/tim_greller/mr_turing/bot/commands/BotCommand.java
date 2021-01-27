@@ -1,4 +1,4 @@
-package de.tim_greller.mr_turing.bot;
+package de.tim_greller.mr_turing.bot.commands;
 
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.object.entity.Message;
@@ -7,7 +7,7 @@ import discord4j.core.object.entity.Message;
  * This interface has to be implemented by each command that will be added to the Discord
  * bot.
  */
-interface BotCommand {
+public interface BotCommand {
 	
 	/**
 	 * The full and fancy name of the command.
@@ -38,8 +38,10 @@ interface BotCommand {
 	 * execute operations from the {@link TuringMachineManager} and/or respond to the
 	 * user.
 	 * 
-	 * @param message The message that triggered this command.
+	 * @param message   The message that triggered this command. This will be used to give
+	 *                  results and feedback to the user.
+	 * @param argument  The argument the user provided for this command call.
 	 * @param tmManager The {@link TuringMachineManager} of the corresponding channel.
 	 */
-	void execute(Message message, TuringMachineManager tmManager);
+	void execute(Message message, String argument, TuringMachineManager tmManager);
 }
