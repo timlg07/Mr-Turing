@@ -24,9 +24,6 @@ public class Bot extends ReactiveEventAdapter {
 	/** The prefix before every command that should get interpreted by this bot. */
 	private final String prefix = "!tm";
 	
-	/** Whether the prefix has to be followed by a space or not. */
-	private final boolean isPrefixFollowedBySpace = true;
-	
 	/** The bot's token. */
 	private String token;
 	
@@ -89,15 +86,21 @@ public class Bot extends ReactiveEventAdapter {
 		return Stream.of(commands).map(this::addCommand).allMatch(b -> b);
 	}
 	
+	/**
+	 * Takes a message that should be interpreted as a command, determines the command 
+	 * trigger and the argument part and executes the specified command.
+	 * 
+	 * @param message The message which should be interpreted and executed.
+	 * @throws InvalidCommandSyntaxException Thrown if the message does not contain a
+	 *                                       command in a valid syntax.
+	 */
 	private void parseAndExecute(Message message) throws InvalidCommandSyntaxException {
 		final String content = message.getContent();
-		final int prefixLength = prefix.length() + (isPrefixFollowedBySpace ? 1 : 0);
-		
-		if (prefixLength >= content.length()) {
-			throw new InvalidCommandSyntaxException("No command provided.");
-		}
-
-		final String contentWithoutPrefix = content.substring(prefixLength);
+    	final String contentWithoutPrefix = content.substring(prefix.length()).trim();
+    		
+    	if (contentWithoutPrefix.length() == 0) {
+    		throw new InvalidCommandSyntaxException("No command provided.");
+    	}
 		
 		/*
 		 * Each command has to be separated from its parameter(s) with a space. By
@@ -134,22 +137,20 @@ public class Bot extends ReactiveEventAdapter {
     	final Message message = event.getMessage();
     	final String content = message.getContent();
     	final boolean isBot = message.getAuthor().map(user -> user.isBot()).orElse(false);
+    	final boolean usesPrefix = content.toLowerCase().startsWith(prefix);
     	
-    	// Ignore messages from bots.
-    	if (isBot) {
+    	// Ignore messages from bots and messages without the correct prefix.
+    	if (isBot || !usesPrefix) {
     		return Mono.empty();
     	}
-
-    	if (content.toLowerCase().startsWith(prefix)) {
-        	System.out.println("[ MSG:] " + content);
-        	try {
-				parseAndExecute(message);
-			} catch (InvalidCommandSyntaxException e) {
-				return message.getChannel().flatMap(c -> {
-					return c.createMessage("**Error.** " + e.getMessage());
-				});
-			}
-    	}
+    	
+        try {
+			parseAndExecute(message);
+		} catch (InvalidCommandSyntaxException e) {
+			return message.getChannel().flatMap(c -> {
+				return c.createMessage("**Error.** " + e.getMessage());
+			});
+		}
     	
         return Mono.empty();
     }
