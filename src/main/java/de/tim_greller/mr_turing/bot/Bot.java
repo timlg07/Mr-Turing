@@ -13,6 +13,7 @@ import discord4j.core.event.ReactiveEventAdapter;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.reaction.ReactionEmoji;
 import reactor.core.publisher.Mono;
 
 /**
@@ -20,6 +21,12 @@ import reactor.core.publisher.Mono;
  * Turing machine model to execute commands.
  */
 public class Bot extends ReactiveEventAdapter {
+
+	/** The check mark emoji used to react to a successfull command-call. */
+	private static final ReactionEmoji CHECKMARK = ReactionEmoji.unicode("\u2705");
+	
+	/** The cross emoji with which the bot will react to messages with wrong syntax. */
+	private static final ReactionEmoji CROSS = ReactionEmoji.unicode("\u274c");
 	
 	/** The prefix before every command that should get interpreted by this bot. */
 	private final String prefix = "!tm";
@@ -146,7 +153,9 @@ public class Bot extends ReactiveEventAdapter {
     	
         try {
 			parseAndExecute(message);
+			message.addReaction(CHECKMARK).subscribe();
 		} catch (InvalidCommandSyntaxException e) {
+			message.addReaction(CROSS).subscribe();
 			return message.getChannel().flatMap(c -> {
 				return c.createMessage("**Error.** " + e.getMessage());
 			});
