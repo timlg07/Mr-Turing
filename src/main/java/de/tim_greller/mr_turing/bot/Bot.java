@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.commands.BotCommand;
-import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
+import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.ReactiveEventAdapter;
@@ -164,7 +164,7 @@ public class Bot extends ReactiveEventAdapter {
 			public String getCallName() { return "help"; }
 			
 			@Override
-			public Publisher<?> execute(Message msg, String arg, TuringMachineManager t) {
+			public Publisher<?> execute(Message msg, String arg, TuringMachine tm) {
 				return msg.getChannel().flatMap(channel -> {
 					return channel.createMessage(Bot.this.generateHelpText());
 				});

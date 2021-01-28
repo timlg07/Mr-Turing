@@ -3,7 +3,7 @@ package de.tim_greller.mr_turing.bot.commands;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
-import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
+import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 
 /**
@@ -41,16 +41,16 @@ public interface BotCommand {
 	 * execute operations from the {@link TuringMachineManager} and/or respond to the
 	 * user.
 	 * 
-	 * @param msg The message that triggered this command. This will be used to give
-	 *            results and feedback to the user.
-	 * @param arg The argument the user provided for this command call.
-	 * @param tmManager The {@link TuringMachineManager} of the corresponding channel.
+	 * @param message The message that triggered this command. This will be used to give
+	 *           	  results and feedback to the user.
+	 * @param argument The argument the user provided for this command call.
+	 * @param tm The {@link TuringMachine} of the corresponding channel.
 	 * 
 	 * @return A publisher that completes when this command has finished execution.
 	 * 
 	 * @throws InvalidCommandSyntaxException Thrown when the given argument is not of a
 	 * 										 valid syntax for this command.
 	 */
-	Publisher<?> execute(Message message, String argument, TuringMachineManager tmManager) 
+	Publisher<?> execute(Message message, String argument, TuringMachine tm) 
 			throws InvalidCommandSyntaxException;
 }

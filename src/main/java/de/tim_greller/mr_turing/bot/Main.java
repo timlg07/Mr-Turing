@@ -15,7 +15,7 @@ public class Main {
 	 * @param args The arguments required to build the bot. The first argument has to be
 	 *             the token.
 	 */
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		if (args.length < 1) {
 			throw new IllegalArgumentException("No token recieved.");
 		}

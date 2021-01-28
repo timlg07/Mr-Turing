@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
-import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
+import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
@@ -32,7 +32,7 @@ public class TransitionCreationCommand implements BotCommand {
 	}
 
 	@Override
-	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) 
+	public Publisher<?> execute(Message msg, String arg, TuringMachine tm) 
 			throws InvalidCommandSyntaxException {
 		
 		String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"

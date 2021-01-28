@@ -2,7 +2,7 @@ package de.tim_greller.mr_turing.bot.commands;
 
 import org.reactivestreams.Publisher;
 
-import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
+import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +30,7 @@ public class TuringMachineCreationCommand implements BotCommand {
 	}
 
 	@Override
-	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) {
+	public Publisher<?> execute(Message msg, String arg, TuringMachine tm) {
 		// TODO: This is only a demo implementation for testing purposes.
 		return Mono.fromRunnable(() -> {
 			System.out.println("command 'new' triggered by: " + msg.getContent());
