@@ -1,9 +1,9 @@
 package de.tim_greller.mr_turing.bot.commands;
 
-import org.reactivestreams.Publisher;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.google.code.regexp.Matcher;
-import com.google.code.regexp.Pattern;
+import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
