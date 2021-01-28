@@ -146,6 +146,12 @@ public class Bot extends ReactiveEventAdapter {
 		return command.execute(message, commandParameter, null);
 	}
 	
+	/**
+	 * Generates the help command of this bot. The command will provide information about
+	 * the bot and its usage.
+	 * 
+	 * @return The help command.
+	 */
 	private BotCommand generateHelpCommand() {
 		return new BotCommand() {
 			@Override
@@ -166,6 +172,12 @@ public class Bot extends ReactiveEventAdapter {
 		};
 	}
 	
+	/**
+	 * Generates the help text of this bot, including an overview of all commands and
+	 * their description.
+	 * 
+	 * @return The help text (uses Discords markdown styling).
+	 */
 	private String generateHelpText() {
 		final StringBuilder helpText = new StringBuilder();
 		final String username = client.getSelf().block().getUsername();
@@ -194,9 +206,8 @@ public class Bot extends ReactiveEventAdapter {
 	@Override
     public Publisher<?> onMessageCreate(MessageCreateEvent event) {
     	final Message message = event.getMessage();
-    	final String content = message.getContent();
     	final boolean isBot = message.getAuthor().map(user -> user.isBot()).orElse(false);
-    	final boolean usesPrefix = content.toLowerCase().startsWith(prefix);
+    	final boolean usesPrefix = message.getContent().toLowerCase().startsWith(prefix);
     	
     	// Ignore messages from bots and messages without the correct prefix.
     	if (isBot || !usesPrefix) {
