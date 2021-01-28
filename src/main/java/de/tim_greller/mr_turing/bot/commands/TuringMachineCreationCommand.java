@@ -1,7 +1,10 @@
 package de.tim_greller.mr_turing.bot.commands;
 
+import org.reactivestreams.Publisher;
+
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.object.entity.Message;
+import reactor.core.publisher.Mono;
 
 /**
  * This command tells the {@link TuringMachineManager} of the channel it was triggered in
@@ -27,9 +30,11 @@ public class TuringMachineCreationCommand implements BotCommand {
 	}
 
 	@Override
-	public void execute(Message msg, String arg, TuringMachineManager tmManager) {
+	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) {
 		// TODO: This is only a demo implementation for testing purposes.
-		System.out.println("command 'new' triggered by: " + msg.getContent());
+		return Mono.fromRunnable(() -> {
+			System.out.println("command 'new' triggered by: " + msg.getContent());
+		});
 	}
 
 }

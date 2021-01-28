@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.commands.BotCommand;
+import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.ReactiveEventAdapter;
@@ -14,6 +15,7 @@ import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.reaction.ReactionEmoji;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -49,6 +51,14 @@ public class Bot extends ReactiveEventAdapter {
 	Bot(String token) {
 		this.token = token;
 		this.commands = new HashMap<>();
+		
+		/*
+		 * The help command is automatically generated for each bot and has access to his
+		 * scope (in order to list all commands and their description), but is treated
+		 * like a normal command.
+		 */
+		BotCommand help = generateHelpCommand();
+		commands.put(help.getCallName(), help);
 	}
 	
 	/**
@@ -98,10 +108,14 @@ public class Bot extends ReactiveEventAdapter {
 	 * trigger and the argument part and executes the specified command.
 	 * 
 	 * @param message The message which should be interpreted and executed.
+	 * @return The publisher that completes when the called command has finished 
+	 * 		   execution.
 	 * @throws InvalidCommandSyntaxException Thrown if the message does not contain a
 	 *                                       command in a valid syntax.
 	 */
-	private void parseAndExecute(Message message) throws InvalidCommandSyntaxException {
+	private Publisher<?> parseAndExecute(Message message) 
+			throws InvalidCommandSyntaxException {
+		
 		final String content = message.getContent();
     	final String contentWithoutPrefix = content.substring(prefix.length()).trim();
     		
@@ -129,7 +143,45 @@ public class Bot extends ReactiveEventAdapter {
 					"Unknown command: \"" + commandName + "\"");
 		}
 		
-		command.execute(message, commandParameter, null);
+		return command.execute(message, commandParameter, null);
+	}
+	
+	private BotCommand generateHelpCommand() {
+		return new BotCommand() {
+			@Override
+			public String getTitle() { return "Help"; }
+			
+			@Override
+			public String getDescription() { return "Shows this help text."; }
+			
+			@Override
+			public String getCallName() { return "help"; }
+			
+			@Override
+			public Publisher<?> execute(Message msg, String arg, TuringMachineManager t) {
+				return msg.getChannel().flatMap(channel -> {
+					return channel.createMessage(Bot.this.generateHelpText());
+				});
+			}
+		};
+	}
+	
+	private String generateHelpText() {
+		final StringBuilder helpText = new StringBuilder();
+		final String username = client.getSelf().block().getUsername();
+		final String newListItem = "\n  - ";
+		
+		helpText.append("Hello. I am ").append(username)
+				.append(".\nYou can use me with the prefix \"").append(prefix)
+				.append("\" and the following commands:");
+		
+		commands.forEach((name, command) -> {
+			helpText.append(newListItem).append("**").append(command.getTitle())
+					.append("** (`").append(name).append("`) ")
+					.append(command.getDescription());
+		});
+		
+		return helpText.toString();
 	}
 	
 	@Override
@@ -152,15 +204,25 @@ public class Bot extends ReactiveEventAdapter {
     	}
     	
         try {
-			parseAndExecute(message);
-			message.addReaction(CHECKMARK).subscribe();
+        	
+        	/*
+        	 * Parse and execute the message and - if successful - react with the
+        	 * checkmark. Then return the concatenation of both publishers.
+        	 */
+			return Flux.concat(parseAndExecute(message), message.addReaction(CHECKMARK));
+			
 		} catch (InvalidCommandSyntaxException e) {
-			message.addReaction(CROSS).subscribe();
-			return message.getChannel().flatMap(c -> {
-				return c.createMessage("**Error.** " + e.getMessage());
-			});
+			
+			/*
+			 * Signalize the wrong syntax / command usage by reacting with a red cross and
+			 * showing the reason for the exception.
+			 */
+			return Flux.concat(
+					message.addReaction(CROSS), 
+					message.getChannel().flatMap(c -> {
+						return c.createMessage("**Error.** " + e.getMessage());
+					})
+			);
 		}
-    	
-        return Mono.empty();
     }
 }

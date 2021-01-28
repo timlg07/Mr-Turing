@@ -1,8 +1,10 @@
 package de.tim_greller.mr_turing.bot.commands;
 
+import org.reactivestreams.Publisher;
+
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.object.entity.Message;
-import discord4j.core.object.reaction.ReactionEmoji;
+import reactor.core.publisher.Mono;
 
 /**
  * This command creates a new transition to the current turing machine hold by the 
@@ -26,8 +28,8 @@ public class TransitionCreationCommand implements BotCommand {
 	}
 
 	@Override
-	public void execute(Message msg, String arg, TuringMachineManager tmManager) {
-		System.out.println(msg.getContent());
+	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) {
+		return Mono.fromRunnable(() -> System.out.println(msg.getContent()));
 	}
 
 }

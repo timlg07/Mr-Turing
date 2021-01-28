@@ -1,5 +1,7 @@
 package de.tim_greller.mr_turing.bot.commands;
 
+import org.reactivestreams.Publisher;
+
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.object.entity.Message;
 
@@ -38,10 +40,12 @@ public interface BotCommand {
 	 * execute operations from the {@link TuringMachineManager} and/or respond to the
 	 * user.
 	 * 
-	 * @param message   The message that triggered this command. This will be used to give
-	 *                  results and feedback to the user.
-	 * @param argument  The argument the user provided for this command call.
+	 * @param msg The message that triggered this command. This will be used to give
+	 *            results and feedback to the user.
+	 * @param arg The argument the user provided for this command call.
 	 * @param tmManager The {@link TuringMachineManager} of the corresponding channel.
+	 * 
+	 * @return A publisher that completes when this command has finished execution.
 	 */
-	void execute(Message message, String argument, TuringMachineManager tmManager);
+	Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager);
 }
