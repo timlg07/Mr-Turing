@@ -2,6 +2,10 @@ package de.tim_greller.mr_turing.bot.commands;
 
 import org.reactivestreams.Publisher;
 
+import com.google.code.regexp.Matcher;
+import com.google.code.regexp.Pattern;
+
+import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
 import de.tim_greller.mr_turing.turing_machine.TuringMachineManager;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
@@ -28,8 +32,34 @@ public class TransitionCreationCommand implements BotCommand {
 	}
 
 	@Override
-	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) {
-		return Mono.fromRunnable(() -> System.out.println(msg.getContent()));
+	public Publisher<?> execute(Message msg, String arg, TuringMachineManager tmManager) 
+			throws InvalidCommandSyntaxException {
+		
+		String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"
+				+ "(?<scannedSymbol>\\w+)\\)";
+		String transitionArrowRegExp = "\\s*-\\>\\s*";
+		String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
+				+ "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
+		
+		Matcher m = Pattern.compile(
+				currentTupelRegExp + 
+				transitionArrowRegExp + 
+				resultingTupelRegExp
+		).matcher(arg);
+		
+		if (!m.find()) {
+			throw new InvalidCommandSyntaxException("This is not a valid transition.");
+		}
+		
+		String currentState = m.group("currentState");
+		String scannedSymbol = m.group("scannedSymbol");
+		String nextState = m.group("nextState");
+		String printSymbol = m.group("printSymbol");
+		String tapeMotion = m.group("tapeMotion");
+		
+		return Mono.fromRunnable(() -> {
+			// TODO
+		});
 	}
 
 }
