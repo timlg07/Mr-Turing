@@ -1,5 +1,8 @@
 package de.tim_greller.mr_turing.turing_machine;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * This class models one cell of a Turing machine's tape.
  */
@@ -96,4 +99,37 @@ public class TapeCell {
 		return rightCell;
 	}
 	
+	/**
+	 * Write a word (= sequence of symbols) to the tape.
+	 * 
+	 * @param word The word as a stack of symbols.
+	 */
+	public void writeWord(Deque<Symbol> word) {
+		if (word.size() < 1) {
+			return;
+		}
+		
+		this.symbol = word.pop();
+		getRightCell().writeWord(word);
+	}
+	
+	/**
+	 * Get the content of the tape right to this cell (including the cell itself) as a
+	 * stack of {@link Symbol}s.
+	 * 
+	 * @return The word that is stored by the tape left to this cell as stack.
+	 */
+	public Deque<Symbol> collect() {
+		Deque<Symbol> wordStack;
+		
+		if (wasRightCellVisited()) {
+			wordStack = getRightCell().collect();
+		} else {
+			// Initialize the stack on the most right cell:
+			wordStack = new LinkedList<>();
+		}
+		
+		wordStack.push(symbol);
+		return wordStack;
+	}
 }
