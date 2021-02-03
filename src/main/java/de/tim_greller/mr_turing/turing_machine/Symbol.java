@@ -22,4 +22,12 @@ public class Symbol {
 		return content;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Symbol) {
+			return ((Symbol) obj).toString().equals(toString());
+		} else {
+			return false;
+		}
+	}
 }

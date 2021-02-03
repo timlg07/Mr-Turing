@@ -30,5 +30,15 @@ public class State {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof State) {
+			State s = (State) obj;
+			return s.toString().equals(name);
+		} else {
+			return false;
+		}
+	}
 
 }
