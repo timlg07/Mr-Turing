@@ -132,4 +132,18 @@ public class TapeCell {
 		wordStack.push(symbol);
 		return wordStack;
 	}
+	
+	/**
+	 * Get the content of the whole tape from the most left visited to the most right
+	 * visited cell as a stack of {@link Symbol}s.
+	 * 
+	 * @return The word that is stored on the tape as a stack.
+	 */
+	public Deque<Symbol> collectAll() {
+		if (wasLeftCellVisited()) {
+			return getLeftCell().collectAll();
+		} else {
+			return collect();
+		}
+	}
 }
