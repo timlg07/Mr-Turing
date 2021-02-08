@@ -1,15 +1,17 @@
 package de.tim_greller.mr_turing.turing_machine;
 
+import java.util.Deque;
+
 /**
  * This class models the Tape of a Turing machine which consists of {@link TapeCell}s.
  */
 public class Tape {
 	
 	/** The blank symbol that is used for empty cells on this tape. */
-	BlankSymbol blank;
+	final BlankSymbol blank;
 	
 	/** The cell on which the header is currently pointing at. */
-	TapeCell currentCell;
+	private TapeCell currentCell;
 	
 	public Tape(BlankSymbol blank) {
 		this.blank = blank;
@@ -60,5 +62,15 @@ public class Tape {
 	 */
 	public void clearSymbol() {
 		writeSymbol(blank);
+	}
+	
+	/**
+	 * Write a word (= sequence of symbols) to the tape, starting from the current head
+	 * position and continuing to the right.
+	 * 
+	 * @param word The word as a stack of symbols.
+	 */
+	public void writeWord(Deque<Symbol> word) {
+		currentCell.writeWord(word);
 	}
 }

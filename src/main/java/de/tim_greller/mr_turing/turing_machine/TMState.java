@@ -5,16 +5,16 @@ package de.tim_greller.mr_turing.turing_machine;
  */
 public enum TMState {
 	
-	/** The TM is in its initial state. */
-	initialState,
+	/** The TM is modifiable and not running yet. */
+	MODIFIABLE,
 	
 	/** The TM is no longer in its initial state and has not yet terminated. */
-	running,
+	RUNNING,
 	
 	/** The TM has terminated and accepts the given input. */
-	accepting,
+	ACCEPTING,
 	
 	/** The TM has terminated and does not accept the input. */
-	denying;
+	DENYING;
 
 }
