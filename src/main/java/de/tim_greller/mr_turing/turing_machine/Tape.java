@@ -36,4 +36,29 @@ public class Tape {
 			break;
 		}
 	}
+
+	/**
+	 * Reads the {@link Symbol} that is stored in the tape at the head position.
+	 * 
+	 * @return The content of the current cell.
+	 */
+	public Symbol readSymbol() {
+		return currentCell.read();
+	}
+	
+	/**
+	 * Writes a {@link Symbol} to the tape at the current head position.
+	 * 
+	 * @param symbol The symbol that should be written to the tape.
+	 */
+	public void writeSymbol(Symbol symbol) {
+		currentCell.write(symbol);
+	}
+	
+	/**
+	 * Deletes the symbol at the current head position. The cell will then be blank again.
+	 */
+	public void clearSymbol() {
+		writeSymbol(blank);
+	}
 }

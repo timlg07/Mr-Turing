@@ -129,7 +129,7 @@ public class TapeCell {
 			wordStack = new LinkedList<>();
 		}
 		
-		wordStack.push(symbol);
+		wordStack.push(read());
 		return wordStack;
 	}
 	
@@ -145,5 +145,23 @@ public class TapeCell {
 		} else {
 			return collect();
 		}
+	}
+	
+	/**
+	 * Reads the content of this cell.
+	 * 
+	 * @return The symbol stored in this cell.
+	 */
+	public Symbol read() {
+		return symbol;
+	}
+	
+	/**
+	 * Writes a {@link Symbol} to this cell.
+	 * 
+	 * @param symbol The symbol that should be stored in this cell.
+	 */
+	public void write(Symbol symbol) {
+		this.symbol = symbol;
 	}
 }
