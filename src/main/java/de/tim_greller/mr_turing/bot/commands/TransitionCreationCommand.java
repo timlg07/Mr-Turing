@@ -20,55 +20,55 @@ import reactor.core.publisher.Mono;
  */
 public class TransitionCreationCommand implements BotCommand {
 
-	@Override
-	public String getTitle() {
-		return "Add Transition";
-	}
+    @Override
+    public String getTitle() {
+        return "Add Transition";
+    }
 
-	@Override
-	public String getDescription() {
-		return "Creates a new transition and adds it to the Turing machine";
-	}
+    @Override
+    public String getDescription() {
+        return "Creates a new transition and adds it to the Turing machine";
+    }
 
-	@Override
-	public String getCallName() {
-		return "add";
-	}
+    @Override
+    public String getCallName() {
+        return "add";
+    }
 
-	@Override
-	public Publisher<?> execute(Message msg, String arg, TuringMachine tm) 
-			throws InvalidCommandSyntaxException {
-		
-		String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"
-				+ "(?<scannedSymbol>\\w+)\\)";
-		String transitionArrowRegExp = "\\s*-\\>\\s*";
-		String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
-				+ "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
-		
-		Matcher matcher = Pattern.compile(
-				currentTupelRegExp + 
-				transitionArrowRegExp + 
-				resultingTupelRegExp
-		).matcher(arg);
-		
-		if (!matcher.find() || matcher.groupCount() < 5 /* amount of groups */) {
-			throw new InvalidCommandSyntaxException("This is not a valid transition.");
-		}
-		
-		Transition transition = new Transition(
-				new State(matcher.group("currentState")),
-				new Symbol(matcher.group("scannedSymbol")),
-				new Symbol(matcher.group("printSymbol")),
-				TapeMove.from(matcher.group("tapeMotion")),
-				new State(matcher.group("nextState"))
-		);
+    @Override
+    public Publisher<?> execute(Message msg, String arg, TuringMachine tm) 
+            throws InvalidCommandSyntaxException {
+        
+        String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"
+                + "(?<scannedSymbol>\\w+)\\)";
+        String transitionArrowRegExp = "\\s*-\\>\\s*";
+        String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
+                + "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
+        
+        Matcher matcher = Pattern.compile(
+                currentTupelRegExp + 
+                transitionArrowRegExp + 
+                resultingTupelRegExp
+        ).matcher(arg);
+        
+        if (!matcher.find() || matcher.groupCount() < 5 /* amount of groups */) {
+            throw new InvalidCommandSyntaxException("This is not a valid transition.");
+        }
+        
+        Transition transition = new Transition(
+                new State(matcher.group("currentState")),
+                new Symbol(matcher.group("scannedSymbol")),
+                new Symbol(matcher.group("printSymbol")),
+                TapeMove.from(matcher.group("tapeMotion")),
+                new State(matcher.group("nextState"))
+        );
 
-		boolean success = tm.addTransition(transition);
-		if (!success) {
-			throw new InvalidCommandSyntaxException("This transition was already added.");
-		}
-		
-		return Mono.empty();
-	}
+        boolean success = tm.addTransition(transition);
+        if (!success) {
+            throw new InvalidCommandSyntaxException("This transition was already added.");
+        }
+        
+        return Mono.empty();
+    }
 
 }
