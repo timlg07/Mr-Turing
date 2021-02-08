@@ -6,6 +6,10 @@ import java.util.regex.Pattern;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
+import de.tim_greller.mr_turing.turing_machine.State;
+import de.tim_greller.mr_turing.turing_machine.Symbol;
+import de.tim_greller.mr_turing.turing_machine.TapeMove;
+import de.tim_greller.mr_turing.turing_machine.Transition;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
@@ -41,25 +45,30 @@ public class TransitionCreationCommand implements BotCommand {
 		String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
 				+ "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
 		
-		Matcher m = Pattern.compile(
+		Matcher matcher = Pattern.compile(
 				currentTupelRegExp + 
 				transitionArrowRegExp + 
 				resultingTupelRegExp
 		).matcher(arg);
 		
-		if (!m.find()) {
+		if (!matcher.find() || matcher.groupCount() < 5 /* amount of groups */) {
 			throw new InvalidCommandSyntaxException("This is not a valid transition.");
 		}
 		
-		String currentState = m.group("currentState");
-		String scannedSymbol = m.group("scannedSymbol");
-		String nextState = m.group("nextState");
-		String printSymbol = m.group("printSymbol");
-		String tapeMotion = m.group("tapeMotion");
+		Transition transition = new Transition(
+				new State(matcher.group("currentState")),
+				new Symbol(matcher.group("scannedSymbol")),
+				new Symbol(matcher.group("printSymbol")),
+				TapeMove.from(matcher.group("tapeMotion")),
+				new State(matcher.group("nextState"))
+		);
+
+		boolean success = tm.addTransition(transition);
+		if (!success) {
+			throw new InvalidCommandSyntaxException("This transition was already added.");
+		}
 		
-		return Mono.fromRunnable(() -> {
-			// TODO
-		});
+		return Mono.empty();
 	}
 
 }

@@ -31,10 +31,7 @@ public class TuringMachineCreationCommand implements BotCommand {
 
 	@Override
 	public Publisher<?> execute(Message msg, String arg, TuringMachine tm) {
-		// TODO: This is only a demo implementation for testing purposes.
-		return Mono.fromRunnable(() -> {
-			System.out.println("command 'new' triggered by: " + msg.getContent());
-		});
+		return Mono.fromRunnable(tm::clear);
 	}
 
 }

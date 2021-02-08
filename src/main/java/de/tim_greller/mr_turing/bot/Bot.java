@@ -7,7 +7,9 @@ import java.util.stream.Stream;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.commands.BotCommand;
+import de.tim_greller.mr_turing.turing_machine.DeterministicTuringMachine;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.ReactiveEventAdapter;
@@ -42,6 +44,9 @@ public class Bot extends ReactiveEventAdapter {
 	/** The commands of the bot, mapped with their corresponding trigger. */
 	private Map<String, BotCommand> commands;
 	
+	/** The individual Turing machine of each channel. */
+	private Map<Snowflake, TuringMachine> turingMachines;
+	
 	/**
 	 * Creates a new Bot instance with the given token. In order for the bot to start,
 	 * you have to log it in using {@link Bot#login()}.
@@ -50,7 +55,9 @@ public class Bot extends ReactiveEventAdapter {
 	 */
 	Bot(String token) {
 		this.token = token;
-		this.commands = new HashMap<>();
+		
+		turingMachines = new HashMap<>();
+		commands = new HashMap<>();
 		
 		/*
 		 * The help command is automatically generated for each bot and has access to his
@@ -116,9 +123,10 @@ public class Bot extends ReactiveEventAdapter {
 	private Publisher<?> parseAndExecute(Message message) 
 			throws InvalidCommandSyntaxException {
 		
+		final Snowflake channelId = message.getChannelId();
 		final String content = message.getContent();
     	final String contentWithoutPrefix = content.substring(prefix.length()).trim();
-    		
+    	
     	if (contentWithoutPrefix.length() == 0) {
     		throw new InvalidCommandSyntaxException("No command provided.");
     	}
@@ -143,7 +151,13 @@ public class Bot extends ReactiveEventAdapter {
 					"Unknown command: \"" + commandName + "\"");
 		}
 		
-		return command.execute(message, commandParameter, null);
+		TuringMachine tm = turingMachines.get(channelId);
+		if (tm == null) {
+			tm = new DeterministicTuringMachine();
+			turingMachines.put(channelId, tm);
+		}
+		
+		return command.execute(message, commandParameter, tm);
 	}
 	
 	/**
@@ -222,7 +236,8 @@ public class Bot extends ReactiveEventAdapter {
         	 */
 			return Flux.concat(parseAndExecute(message), message.addReaction(CHECKMARK));
 			
-		} catch (InvalidCommandSyntaxException e) {
+		} catch (InvalidCommandSyntaxException | IllegalArgumentException 
+				| IllegalStateException e) {
 			
 			/*
 			 * Signalize the wrong syntax / command usage by reacting with a red cross and
