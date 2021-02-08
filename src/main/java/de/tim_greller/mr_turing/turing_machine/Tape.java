@@ -15,4 +15,25 @@ public class Tape {
 		this.blank = blank;
 		currentCell = new TapeCell(blank);
 	}
+	
+	/**
+	 * Moves the head one cell in the given direction (or does not move it at all).
+	 * 
+	 * @param direction The direction in which the head should be moved on the tape.
+	 */
+	public void moveHead(TapeMove direction) {
+		switch (direction) {
+		
+		case LEFT:
+			currentCell = currentCell.getLeftCell();
+			break;
+		
+		case RIGHT:
+			currentCell = currentCell.getRightCell();
+			break;
+			
+		default:
+			break;
+		}
+	}
 }
