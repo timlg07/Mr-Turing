@@ -29,9 +29,13 @@ public class PrintConfigurationCommand implements BotCommand {
             throws InvalidCommandSyntaxException {
         
         final String tapeContent = tm.getTapeContent();
+        final int headIndex = tm.getHeadIndex();
+        final String currentState = tm.getCurrentState().toString();
         
-        return message.getChannel().flatMap(
-                c -> c.createMessage("Tape content: `" + tapeContent + "`\n"));
+        return message.getChannel().flatMap(c -> c.createMessage(
+                "Tape content: `" + tapeContent + "`\n"
+                + "Head index: `" + headIndex + "`\n"
+                + "Current state: `" + currentState + "`"));
     }
 
 }

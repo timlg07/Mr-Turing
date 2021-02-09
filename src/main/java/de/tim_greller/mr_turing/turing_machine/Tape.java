@@ -82,6 +82,15 @@ public class Tape {
     public Deque<Symbol> getContent() {
         return currentCell.collectAll();
     }
+
+    /**
+     * The position of the head on the tape.
+     * 
+     * @return The index of the cell the head is pointing at.
+     */
+    public int getHeadIndex() {
+        return currentCell.index;
+    }
     
     /**
      * The string representation of the tapes content.

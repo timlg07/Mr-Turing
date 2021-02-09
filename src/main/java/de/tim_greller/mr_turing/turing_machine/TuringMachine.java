@@ -116,5 +116,19 @@ public interface TuringMachine {
      * @return The content of the TMs tape.
      */
     public String getTapeContent();
+    
+    /**
+     * The position of the head on the tape.
+     * 
+     * @return The index of the cell the head is pointing at.
+     */
+    public int getHeadIndex();
+    
+    /**
+     * The current state of the TM.
+     * 
+     * @return The state of the TM.
+     */
+    public State getCurrentState();
 
 }

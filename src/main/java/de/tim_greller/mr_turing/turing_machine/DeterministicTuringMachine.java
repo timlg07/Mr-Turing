@@ -164,6 +164,16 @@ public class DeterministicTuringMachine implements TuringMachine {
         return tape.toString();
     }
     
+    @Override
+    public int getHeadIndex() {
+        return tape.getHeadIndex();
+    }
+    
+    @Override
+    public State getCurrentState() {
+        return currentState;
+    }
+    
     /**
      * Performs the given transition on this Turing machine.
      * 
