@@ -182,6 +182,7 @@ public class DeterministicTuringMachine implements TuringMachine {
     private void performTransition(Transition transition) {
         tape.writeSymbol(transition.printSymbol);
         currentState = transition.nextState;
+        tape.moveHead(transition.tapeMotion);
     }
     
     /**
