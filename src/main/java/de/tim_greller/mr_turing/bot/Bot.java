@@ -195,7 +195,7 @@ public class Bot extends ReactiveEventAdapter {
     private String generateHelpText() {
         final StringBuilder helpText = new StringBuilder();
         final String username = client.getSelf().block().getUsername();
-        final String newListItem = "\n  - ";
+        final String newListItem = "\n\n";
         
         helpText.append("Hello. I am ").append(username)
                 .append(".\nYou can use me with the prefix \"").append(prefix)
@@ -203,7 +203,7 @@ public class Bot extends ReactiveEventAdapter {
         
         commands.forEach((name, command) -> {
             helpText.append(newListItem).append("**").append(command.getTitle())
-                    .append("** (`").append(name).append("`) ")
+                    .append("** (`").append(name).append("`)\n")
                     .append(command.getDescription());
         });
         
