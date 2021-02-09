@@ -39,13 +39,13 @@ public class TransitionCreationCommand implements BotCommand {
     public Publisher<?> execute(Message msg, String arg, TuringMachine tm) 
             throws InvalidCommandSyntaxException {
         
-        String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"
+        final String currentTupelRegExp = "\\((?<currentState>\\w+),\\s*"
                 + "(?<scannedSymbol>\\w+)\\)";
-        String transitionArrowRegExp = "\\s*-\\>\\s*";
-        String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
+        final String transitionArrowRegExp = "\\s*-\\>\\s*";
+        final String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
                 + "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
         
-        Matcher matcher = Pattern.compile(
+        final Matcher matcher = Pattern.compile(
                 currentTupelRegExp + 
                 transitionArrowRegExp + 
                 resultingTupelRegExp
@@ -55,7 +55,7 @@ public class TransitionCreationCommand implements BotCommand {
             throw new InvalidCommandSyntaxException("This is not a valid transition.");
         }
         
-        Transition transition = new Transition(
+        final Transition transition = new Transition(
                 new State(matcher.group("currentState")),
                 new Symbol(matcher.group("scannedSymbol")),
                 new Symbol(matcher.group("printSymbol")),
@@ -63,7 +63,7 @@ public class TransitionCreationCommand implements BotCommand {
                 new State(matcher.group("nextState"))
         );
 
-        boolean success = tm.addTransition(transition);
+        final boolean success = tm.addTransition(transition);
         if (!success) {
             throw new InvalidCommandSyntaxException("This transition was already added.");
         }

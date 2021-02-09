@@ -107,6 +107,16 @@ public class DeterministicTuringMachine implements TuringMachine {
     }
 
     @Override
+    public void setInput(String input) {
+        modifiableOrThrow();
+        this.input.clear();
+        
+        for (char c : input.toCharArray()) {
+            this.input.addLast(new Symbol(c));
+        }
+    }
+    
+    @Override
     public BlankSymbol getDefaultBlankSymbol() {
         return new BlankSymbol("_");
     }

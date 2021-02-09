@@ -1,5 +1,6 @@
 package de.tim_greller.mr_turing.bot;
 
+import de.tim_greller.mr_turing.bot.commands.SetInputCommand;
 import de.tim_greller.mr_turing.bot.commands.TransitionCreationCommand;
 import de.tim_greller.mr_turing.bot.commands.TuringMachineCreationCommand;
 
@@ -35,7 +36,8 @@ public class Main {
         
         bot.addCommands(
             new TuringMachineCreationCommand(),
-            new TransitionCreationCommand()
+            new TransitionCreationCommand(),
+            new SetInputCommand()
         );
         
         return bot;

@@ -66,6 +66,15 @@ public interface TuringMachine {
     public boolean addInitialState(State state);
     
     /**
+     * Sets the input for the Turing machine. Once the TM starts its execution, this
+     * String has to be written on the TMs tape. Each character in the String will be one
+     * symbol.
+     * 
+     * @param input The new input for the TM.
+     */
+    public void setInput(String input);
+    
+    /**
      * Sets the blank symbol of this TM.
      * <p>
      * The TM can only be modified when it is in its modifiable state.

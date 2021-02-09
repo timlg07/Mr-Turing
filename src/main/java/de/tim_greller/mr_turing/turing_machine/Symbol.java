@@ -17,6 +17,15 @@ public class Symbol {
         this.content = content;
     }
     
+    /**
+     * Creates a new Symbol with the specified content.
+     * 
+     * @param content The single character this symbol should represent.
+     */
+    public Symbol(char content) {
+        this(Character.toString(content));
+    }
+
     @Override
     public String toString() {
         return content;
