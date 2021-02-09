@@ -1,9 +1,6 @@
 package de.tim_greller.mr_turing.bot;
 
-import de.tim_greller.mr_turing.bot.commands.BuildTuringMachineCommand;
-import de.tim_greller.mr_turing.bot.commands.SetInputCommand;
-import de.tim_greller.mr_turing.bot.commands.TransitionCreationCommand;
-import de.tim_greller.mr_turing.bot.commands.TuringMachineCreationCommand;
+import de.tim_greller.mr_turing.bot.commands.*;
 
 /**
  * This class runs the application by creating a {@link Bot} instance and logging it in
@@ -39,7 +36,8 @@ public class Main {
             new TuringMachineCreationCommand(),
             new TransitionCreationCommand(),
             new SetInputCommand(),
-            new BuildTuringMachineCommand()
+            new BuildTuringMachineCommand(),
+            new PrintConfigurationCommand()
         );
         
         return bot;

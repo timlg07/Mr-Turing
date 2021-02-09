@@ -17,6 +17,7 @@ public class DeterministicTuringMachine implements TuringMachine {
     @Override
     public void clear() {
         status = TMState.MODIFIABLE;
+        input.clear();
         transitions.clear();
         acceptingStates.clear();
         currentState = null;
@@ -25,10 +26,7 @@ public class DeterministicTuringMachine implements TuringMachine {
 
     @Override
     public void restart() {
-        if (status == TMState.MODIFIABLE) {
-            throw new IllegalStateException(
-                    "The TM cannot be restarted from a modifiable state.");
-        }
+        builtOrThrow();
         
         status = TMState.MODIFIABLE;
         tape = new Tape(tape.blank);
@@ -155,6 +153,17 @@ public class DeterministicTuringMachine implements TuringMachine {
         }
     }
     
+    @Override
+    public String getTapeContent() {
+        builtOrThrow();
+        
+        if (tape == null) {
+            return "(empty)";
+        }
+        
+        return tape.toString();
+    }
+    
     /**
      * Performs the given transition on this Turing machine.
      * 
@@ -197,6 +206,16 @@ public class DeterministicTuringMachine implements TuringMachine {
         if (status != TMState.MODIFIABLE) {
             throw new IllegalStateException(
                     "The TM has to be in its modifiable state to do that.");
+        }
+    }
+    
+    /**
+     * Throws an {@link IllegalStateException} if the TM is not built.
+     */
+    private void builtOrThrow() {
+        if (status == TMState.MODIFIABLE) {
+            throw new IllegalStateException(
+                    "The TM has to be built in order to do that.");
         }
     }
 }

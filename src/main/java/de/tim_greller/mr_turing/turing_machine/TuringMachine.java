@@ -109,5 +109,12 @@ public interface TuringMachine {
      * If the Turing machine is running, this method performs one calculation step on it.
      */
     public void performStep();
+    
+    /**
+     * Returns a string representation of the current tape content.
+     * 
+     * @return The content of the TMs tape.
+     */
+    public String getTapeContent();
 
 }

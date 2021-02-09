@@ -73,4 +73,28 @@ public class Tape {
     public void writeWord(Deque<Symbol> word) {
         currentCell.writeWord(word);
     }
+    
+    /**
+     * Returns all symbols stored on the tape, ordered from left to right.
+     * 
+     * @return The tapes content as a stack of symbols.
+     */
+    public Deque<Symbol> getContent() {
+        return currentCell.collectAll();
+    }
+    
+    /**
+     * The string representation of the tapes content.
+     */
+    @Override
+    public String toString() {
+        final StringBuilder output = new StringBuilder();
+        final String separator = " | ";
+        
+        getContent().stream().forEachOrdered(
+                s -> output.append(separator).append(s.toString())
+        );
+        
+        return output.append(separator).toString();
+    }
 }
