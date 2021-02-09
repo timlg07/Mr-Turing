@@ -16,7 +16,7 @@ public class BuildTuringMachineCommand implements BotCommand {
 
     @Override
     public String getDescription() {
-        return "Builds the Turing machine using the defined data. Once a TM was builded, "
+        return "Builds the Turing machine using the defined data. Once a TM was built, "
                 + "it can no longer be modified. If data like initial/accepting states "
                 + "or the blank symbol was not specified, the default will be used.";
     }
