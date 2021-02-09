@@ -21,7 +21,7 @@ public interface TuringMachine {
      * Changes the TMs status from modifiable to running. Uses default values if the
      * initial and accepting states or the blank symbol properties were not set.
      */
-    public void start();
+    public void build();
     
     /**
      * Adds the given {@link Transition} to this Turing machine and returns {@code true}.

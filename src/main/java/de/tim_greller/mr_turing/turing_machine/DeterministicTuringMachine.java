@@ -33,11 +33,11 @@ public class DeterministicTuringMachine implements TuringMachine {
         status = TMState.MODIFIABLE;
         tape = new Tape(tape.blank);
         
-        start();
+        build();
     }
 
     @Override
-    public void start() {
+    public void build() {
         modifiableOrThrow();
         
         if (tape == null) {
@@ -53,6 +53,8 @@ public class DeterministicTuringMachine implements TuringMachine {
         if (acceptingStates.isEmpty()) {
             acceptingStates.add(getDefaultAcceptingState());
         }
+        
+        status = TMState.RUNNING;
     }
 
     @Override

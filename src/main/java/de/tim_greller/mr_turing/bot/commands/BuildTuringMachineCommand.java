@@ -7,29 +7,30 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
-public class SetInputCommand implements BotCommand {
+public class BuildTuringMachineCommand implements BotCommand {
 
     @Override
     public String getTitle() {
-        return "Set Input";
+        return "Build Turing machine";
     }
 
     @Override
     public String getDescription() {
-        return "Sets the input of a Turing machine. The given string will be written to "
-                + "the TMs tape when the TM is build.";
+        return "Builds the Turing machine using the defined data. Once a TM was builded, "
+                + "it can no longer be modified. If data like initial/accepting states "
+                + "or the blank symbol was not specified, the default will be used.";
     }
 
     @Override
     public String getCallName() {
-        return "input";
+        return "build";
     }
 
     @Override
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
-
-        tm.setInput(argument);
+        
+        tm.build();
         
         return Mono.empty();
     }
