@@ -37,7 +37,8 @@ public class Main {
             new TransitionCreationCommand(),
             new SetInputCommand(),
             new BuildTuringMachineCommand(),
-            new PrintConfigurationCommand()
+            new PrintConfigurationCommand(),
+            new DoStepCommand()
         );
         
         return bot;
