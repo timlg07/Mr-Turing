@@ -1,5 +1,7 @@
 package de.tim_greller.mr_turing.turing_machine;
 
+import java.util.Deque;
+
 /**
  * An interface that defines how to interact with Turing machines. Implementations of this
  * interface can be deterministic or nondeterministic.
@@ -111,11 +113,11 @@ public interface TuringMachine {
     public void performStep();
     
     /**
-     * Returns a string representation of the current tape content.
+     * Returns a stack containing the symbols currently stored on the tape.
      * 
      * @return The content of the TMs tape.
      */
-    public String getTapeContent();
+    public Deque<Symbol> getTapeContent();
     
     /**
      * The position of the head on the tape.
@@ -130,5 +132,42 @@ public interface TuringMachine {
      * @return The state of the TM.
      */
     public State getCurrentState();
+    
+    /**
+     * Returns {@code true} if the TM is in an accepting state.
+     * 
+     * @return Whether the TM currently accepts the input or not.
+     */
+    public boolean isAccepting();
+    
+    /**
+     * Returns {@code true} if the TM is in an denying state.
+     * 
+     * @return Whether the TM currently denies the input or not.
+     */
+    public boolean isDenying();
+    
+    /**
+     * Returns {@code true} if the TM was not yet build and is therefore still in its
+     * modifiable state.
+     * 
+     * @return Whether the TM is currently modifiable.
+     */
+    public boolean isUnbuilt();
+    
+    /**
+     * Returns {@code true} is the TM is currently in its running state.
+     * 
+     * @return Whether the TM is currently running.
+     */
+    public boolean isRunning();
+    
+    /**
+     * Returns the input that was initially given to this TM or will be given to it once
+     * it'll be build.
+     * 
+     * @return The input word of the TM.
+     */
+    public Deque<Symbol> getInput();
 
 }

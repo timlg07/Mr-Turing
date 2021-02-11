@@ -133,7 +133,7 @@ public class DeterministicTuringMachine implements TuringMachine {
     
     @Override
     public void performStep() {
-        if (status != TMState.RUNNING) {
+        if (!isRunning()) {
             throw new IllegalStateException("The TM is not running.");
         }
         
@@ -150,18 +150,27 @@ public class DeterministicTuringMachine implements TuringMachine {
             
         } else {
             performTransition(transition);
+            
+            if (acceptingStates.contains(currentState)) {
+                status = TMState.ACCEPTING;
+            }
         }
     }
     
     @Override
-    public String getTapeContent() {
+    public Deque<Symbol> getTapeContent() {
         builtOrThrow();
         
         if (tape == null) {
-            return "(empty)";
+            return new LinkedList<>();
         }
         
-        return tape.toString();
+        return tape.getContent();
+    }
+    
+    @Override
+    public Deque<Symbol> getInput() {
+        return new LinkedList<Symbol>(input);
     }
     
     @Override
@@ -172,6 +181,26 @@ public class DeterministicTuringMachine implements TuringMachine {
     @Override
     public State getCurrentState() {
         return currentState;
+    }
+    
+    @Override
+    public boolean isAccepting() {
+        return status == TMState.ACCEPTING;
+    }
+    
+    @Override
+    public boolean isDenying() {
+        return status == TMState.DENYING;
+    }
+    
+    @Override
+    public boolean isUnbuilt() {
+        return status == TMState.MODIFIABLE;
+    }
+    
+    @Override
+    public boolean isRunning() {
+        return status == TMState.RUNNING;
     }
     
     /**
@@ -214,7 +243,7 @@ public class DeterministicTuringMachine implements TuringMachine {
      * Throws an {@link IllegalStateException} if the TM is not modifiable currently.
      */
     private void modifiableOrThrow() {
-        if (status != TMState.MODIFIABLE) {
+        if (!isUnbuilt()) {
             throw new IllegalStateException(
                     "The TM has to be in its modifiable state to do that.");
         }
@@ -224,7 +253,7 @@ public class DeterministicTuringMachine implements TuringMachine {
      * Throws an {@link IllegalStateException} if the TM is not built.
      */
     private void builtOrThrow() {
-        if (status == TMState.MODIFIABLE) {
+        if (isUnbuilt()) {
             throw new IllegalStateException(
                     "The TM has to be built in order to do that.");
         }

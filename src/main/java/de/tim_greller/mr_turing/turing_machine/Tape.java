@@ -1,6 +1,7 @@
 package de.tim_greller.mr_turing.turing_machine;
 
 import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * This class models the Tape of a Turing machine which consists of {@link TapeCell}s.
@@ -68,10 +69,10 @@ public class Tape {
      * Write a word (= sequence of symbols) to the tape, starting from the current head
      * position and continuing to the right.
      * 
-     * @param word The word as a stack of symbols.
+     * @param word The word as a stack of symbols. The original stack won't get modified.
      */
     public void writeWord(Deque<Symbol> word) {
-        currentCell.writeWord(word);
+        currentCell.writeWord(new LinkedList<>(word));
     }
     
     /**
@@ -90,20 +91,5 @@ public class Tape {
      */
     public int getHeadIndex() {
         return currentCell.index;
-    }
-    
-    /**
-     * The string representation of the tapes content.
-     */
-    @Override
-    public String toString() {
-        final StringBuilder output = new StringBuilder();
-        final String separator = " | ";
-        
-        getContent().stream().forEachOrdered(
-                s -> output.append(separator).append(s.toString())
-        );
-        
-        return output.append(separator).toString();
     }
 }
