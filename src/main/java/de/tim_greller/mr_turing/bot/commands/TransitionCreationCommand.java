@@ -27,7 +27,10 @@ public class TransitionCreationCommand implements BotCommand {
 
     @Override
     public String getDescription() {
-        return "Creates a new transition and adds it to the Turing machine";
+        return "Creates a new transition and adds it to the Turing machine.\n"
+                + "A transition has to be in this form: `(currentState, scannedSymbol) ->"
+                + " (nextState, printSymbol, tapeMotion)` with TapeMotion being either "
+                + "left, right or none.";
     }
 
     @Override
@@ -43,7 +46,7 @@ public class TransitionCreationCommand implements BotCommand {
                 + "(?<scannedSymbol>\\w+)\\)";
         final String transitionArrowRegExp = "\\s*-\\>\\s*";
         final String resultingTupelRegExp = "\\((?<nextState>\\w+),\\s*"
-                + "(?<printSymbol>\\w+),\\s*(?<tapeMotion>[lnrLNR])\\)";
+                + "(?<printSymbol>\\w+),\\s*(?<tapeMotion>\\w+)\\)";
         
         final Matcher matcher = Pattern.compile(
                 currentTupelRegExp + 
