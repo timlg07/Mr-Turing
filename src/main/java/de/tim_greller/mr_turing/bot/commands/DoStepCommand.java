@@ -28,6 +28,13 @@ public class DoStepCommand implements BotCommand {
     @Override
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
+        
+        if (tm.isUnbuilt()) {
+            tm.build();
+            message.getChannel().flatMap(
+                    c -> c.createMessage("Executed Turing machine build automatically.")
+            ).block();
+        }
 
         tm.performStep();
         
