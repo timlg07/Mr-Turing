@@ -3,6 +3,7 @@ package de.tim_greller.mr_turing.bot.commands;
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
+import de.tim_greller.mr_turing.bot.TMFormatterUtils;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 
@@ -28,7 +29,7 @@ public class PrintConfigurationCommand implements BotCommand {
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
         
-        final String tapeContent = tm.getTapeContent();
+        final String tapeContent = TMFormatterUtils.formatWord(tm.getTapeContent(), " | ");
         final int headIndex = tm.getHeadIndex();
         final String currentState = tm.getCurrentState().toString();
         

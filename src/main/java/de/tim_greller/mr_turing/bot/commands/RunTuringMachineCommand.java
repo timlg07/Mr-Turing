@@ -6,37 +6,41 @@ import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
 import de.tim_greller.mr_turing.bot.TMFormatterUtils;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
-import reactor.core.publisher.Mono;
 
-public class DoStepCommand implements BotCommand {
+public class RunTuringMachineCommand implements BotCommand {
 
     @Override
     public String getTitle() {
-        return "Perform a calculation step";
+        return "Run the Turing machine";
     }
 
     @Override
     public String getDescription() {
-        return "Performs one calculation step of the Turing machine.";
+        return "Executes the Turing machine until it terminates.";
     }
 
     @Override
     public String getCallName() {
-        return "step";
+        return "run";
     }
 
     @Override
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
-
-        tm.performStep();
         
-        final String terminateMessage = TMFormatterUtils.getTerminationMessageContent(tm);
-        if (terminateMessage != null) {
-            return message.getChannel().flatMap(c -> c.createMessage(terminateMessage));
+        if (tm.isUnbuilt()) {
+            tm.build();
+            message.getChannel().flatMap(
+                    c -> c.createMessage("The TM was automatically build.")
+            ).block();
         }
         
-        return Mono.empty();
+        do {
+            tm.performStep();
+        } while (tm.isRunning());
+
+        final String terminateMessage = TMFormatterUtils.getTerminationMessageContent(tm);
+        return (message.getChannel().flatMap(c -> c.createMessage(terminateMessage)));
     }
 
 }
