@@ -110,7 +110,11 @@ public class TapeCell {
         }
         
         this.symbol = word.pop();
-        getRightCell().writeWord(word);
+        
+        // Avoid creating an additional cell if its not necessary.
+        if (word.size() > 0) {
+            getRightCell().writeWord(word);
+        }
     }
     
     /**
