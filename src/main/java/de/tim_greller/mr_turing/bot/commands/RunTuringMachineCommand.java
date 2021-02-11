@@ -31,7 +31,7 @@ public class RunTuringMachineCommand implements BotCommand {
         if (tm.isUnbuilt()) {
             tm.build();
             message.getChannel().flatMap(
-                    c -> c.createMessage("The TM was automatically build.")
+                    c -> c.createMessage("Executed Turing machine build automatically.")
             ).block();
         }
         

@@ -15,7 +15,7 @@ public interface BotCommand {
     /**
      * The full and fancy name of the command.
      * 
-     * @return The command's title. Basic Discord Markdown formating can be used.
+     * @return The command's title.
      */
     String getTitle();
     
@@ -23,7 +23,7 @@ public interface BotCommand {
      * This method should provide a description of the command that helps the user to use
      * it properly.
      * 
-     * @return The description / help text. Basic Discord Markdown formating can be used.
+     * @return The description / help text. Basic Discord Markdown formating may be used.
      */
     String getDescription();
     
@@ -37,9 +37,8 @@ public interface BotCommand {
     String getCallName();
     
     /**
-     * This method should parse the given message to extract needed data. It can then
-     * execute operations from the {@link TuringMachineManager} and/or respond to the
-     * user.
+     * This method should parse the given arguments to extract needed data. It can then
+     * execute operations on the {@link TuringMachine} and respond to the user.
      * 
      * @param message The message that triggered this command. This will be used to give
      *                 results and feedback to the user.

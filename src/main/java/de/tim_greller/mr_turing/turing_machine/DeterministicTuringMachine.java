@@ -4,14 +4,50 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This is a deterministic implementation of a Turing machine. It has one tape, one
+ * initial state and can get to one of multiple accepting states using the given
+ * transitions. If no transition can be applied, it automatically denies the input.
+ */
 public class DeterministicTuringMachine implements TuringMachine {
 
+    /** 
+     * The status of the Turing machine. Signalizes whether the TM is running or not and
+     * if not, if it terminated in an accepting or denying state or if it is currently
+     * modifiable.
+     */
     private TMState status;
+    
+    /** 
+     * The current state of the automata/machine. 
+     */
     private State currentState;
+    
+    /** 
+     * The initial state from which the TM starts its execution. Because this is a
+     * deterministic implementation, only one initial state can exist. The state is stored
+     * in case the TM should be restarted later.
+     */
     private State initialState;
+    
+    /** 
+     * All transitions between the different states of this TM.
+     */
     private final List<Transition> transitions = new LinkedList<>();
+    
+    /** 
+     * If the TM is in one of this states, it instantly terminates and accepts the input.
+     */
     private final List<State> acceptingStates = new LinkedList<>();
+    
+    /**
+     * The input word that will be written on the tape once the TM is getting build.
+     */
     private final Deque<Symbol> input = new LinkedList<>();
+    
+    /**
+     * The tape of the Turing machine.
+     */
     private Tape tape;
     
     @Override

@@ -6,7 +6,7 @@ import de.tim_greller.mr_turing.turing_machine.Symbol;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 
 /**
- * This class contains utility methods to create String representation of Turing machine
+ * This class contains utility methods to create String representations of Turing machine
  * components.
  */
 public final class TMFormatterUtils {
