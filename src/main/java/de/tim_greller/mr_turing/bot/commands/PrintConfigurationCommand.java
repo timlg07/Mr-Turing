@@ -34,9 +34,9 @@ public class PrintConfigurationCommand implements BotCommand {
         final String currentState = tm.getCurrentState().toString();
         
         return message.getChannel().flatMap(c -> c.createMessage(
-                "Tape content: `" + tapeContent + "`\n"
-                + "Head index: `" + headIndex + "`\n"
-                + "Current state: `" + currentState + "`"));
+                "**Tape content:** `" + tapeContent + "`\n"
+                + "**Head index:** `" + headIndex + "`\n"
+                + "**Current state:** `" + currentState + "`"));
     }
 
 }

@@ -54,7 +54,7 @@ public class TransitionCreationCommand implements BotCommand {
                 resultingTupelRegExp
         ).matcher(arg);
         
-        if (!matcher.find() || matcher.groupCount() < 5 /* amount of groups */) {
+        if (!matcher.find() || matcher.groupCount() < 5 /* amount of required groups */) {
             throw new InvalidCommandSyntaxException("This is not a valid transition.");
         }
         

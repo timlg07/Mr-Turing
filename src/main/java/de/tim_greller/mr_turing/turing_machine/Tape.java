@@ -26,7 +26,6 @@ public class Tape {
      */
     public void moveHead(TapeMove direction) {
         switch (direction) {
-        
         case LEFT:
             currentCell = currentCell.getLeftCell();
             break;

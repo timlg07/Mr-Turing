@@ -32,7 +32,7 @@ public final class TMFormatterUtils {
         
         if (tm.isAccepting()) {
             return "The Turing machine accepted the input word \"" + originalInput 
-                    + "\". And the output of the TM was: \"" + resultingTape + "\".";
+                    + "\".\n Its output was: \"" + resultingTape + "\".";
         }
         
         if (tm.isDenying()) {
