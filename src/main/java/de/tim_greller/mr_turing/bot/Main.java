@@ -39,7 +39,8 @@ public class Main {
             new BuildTuringMachineCommand(),
             new PrintConfigurationCommand(),
             new DoStepCommand(),
-            new RunTuringMachineCommand()
+            new RunTuringMachineCommand(),
+            new SetAcceptingStatesCommand()
         );
         
         return bot;

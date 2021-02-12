@@ -3,6 +3,7 @@ package de.tim_greller.mr_turing.turing_machine;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * This is a deterministic implementation of a Turing machine. It has one tape, one
@@ -111,6 +112,14 @@ public class DeterministicTuringMachine implements TuringMachine {
         }
         
         return acceptingStates.add(state);
+    }
+    
+    @Override
+    public boolean setAcceptingStates(State... states) {
+        modifiableOrThrow();
+        
+        acceptingStates.clear();
+        return Stream.of(states).map(this::addAcceptingState).allMatch(b -> b);
     }
     
     /**

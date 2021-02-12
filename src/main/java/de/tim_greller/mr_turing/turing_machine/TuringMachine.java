@@ -55,6 +55,17 @@ public interface TuringMachine {
     public boolean addAcceptingState(State state);
     
     /**
+     * Sets the given {@link States} as (the only) accepting states of this TM. Once the
+     * TM reaches one of the given states, it terminates and accepts the input.
+     * <p>
+     * The TM can only be modified when it is in its modifiable state.
+     * 
+     * @param states The states that should be added as accepting states.
+     * @return Whether all of the states were added successfully.
+     */
+    public boolean setAcceptingStates(State... states);
+    
+    /**
      * Adds the given state to the TM as an initial state. This means the TM can start its
      * processing from the given state.
      * <p>
