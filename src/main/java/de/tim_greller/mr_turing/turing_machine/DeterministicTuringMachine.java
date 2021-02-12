@@ -195,11 +195,9 @@ public class DeterministicTuringMachine implements TuringMachine {
             
         } else {
             performTransition(transition);
-            
-            if (acceptingStates.contains(currentState)) {
-                status = TMState.ACCEPTING;
-            }
         }
+        
+        checkIfAccepting();
     }
     
     @Override
@@ -272,6 +270,16 @@ public class DeterministicTuringMachine implements TuringMachine {
         // Return the first match (or null), as there  should only be 1 or 0 matches.
         return transitions.stream().filter(t -> t.matches(state, scannedSymbol))
                 .findFirst().orElse(null);
+    }
+    
+    /**
+     * If the TM is currently in an accepting state, the TMs status gets set to 
+     * {@link TMState#ACCEPTING}.
+     */
+    private void checkIfAccepting() {
+        if (isAcceptingState(currentState)) {
+            status = TMState.ACCEPTING;
+        }
     }
     
     /**
