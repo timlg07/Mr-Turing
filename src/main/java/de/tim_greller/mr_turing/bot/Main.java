@@ -40,7 +40,8 @@ public class Main {
             new PrintConfigurationCommand(),
             new DoStepCommand(),
             new RunTuringMachineCommand(),
-            new SetAcceptingStatesCommand()
+            new SetAcceptingStatesCommand(),
+            new SetBlankSymbolCommand()
         );
         
         return bot;
