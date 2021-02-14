@@ -19,8 +19,10 @@ A Discord bot, that can simulate Turing machines.
 ## How to use
 ### Invite the bot to your server
 You can use this invite link to add my instance of this bot to your Discord server:  
-[discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot](https://discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot)
-The prefix of the bot is `!tm`.
+[discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot](https://discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot)  
+
+The prefix of the bot is `!tm`.  
+
 ### Run your own instance
 You can run this bot using the gradle wrapper included in this repository with a valid token as argument:
 ```cmd
