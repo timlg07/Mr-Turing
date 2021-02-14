@@ -219,8 +219,8 @@ public class Bot extends ReactiveEventAdapter {
                     if (cmdln.equals("```")) continue;
                     
                     combinedPublisher = Flux.concat(
-                            Bot.this.parseAndExecutePartly(msg, cmdln), 
-                            combinedPublisher
+                            combinedPublisher,
+                            Bot.this.parseAndExecutePartly(msg, cmdln)
                     );
                 }
                 
