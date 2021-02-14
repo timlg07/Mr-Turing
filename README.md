@@ -63,10 +63,16 @@ Sets the blank symbol with which the initial empty tape will be filled.
 
 - **Define the set of final, accepting states** (`accept`)  
 If the Turing machine is in one of the given states, it accepts. The states must be given as a list, separated by whitespaces and/or commas.
-If no arguments are provided, the current set of accepting states is shown.
 
 - **Help** (`help`)  
 Shows this help text.
+
+## Defaults
+If you do not specify otherwise, the Turing machine uses these default values:
+- Initial state `S`
+- Accepting state `F`
+- Blank symbol `_`
+- Empty input string
 
 ## Examples
 ### Invert a binary string

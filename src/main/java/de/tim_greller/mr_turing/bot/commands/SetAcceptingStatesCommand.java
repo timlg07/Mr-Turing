@@ -20,8 +20,7 @@ public class SetAcceptingStatesCommand implements BotCommand {
     public String getDescription() {
         return "If the Turing machine is in one of the given states, it accepts. "
                 + "The states must be given as a list, separated by whitespaces and/or "
-                + "commas.\nIf no arguments are provided, the current set of accepting "
-                + "states is shown.";
+                + "commas.";
     }
 
     @Override
@@ -34,9 +33,7 @@ public class SetAcceptingStatesCommand implements BotCommand {
             throws InvalidCommandSyntaxException {
         
         if (argument.isBlank()) {
-            return message.getChannel().flatMap(c -> c.createMessage(
-                    "The default accepting state is: " 
-                    + tm.getDefaultAcceptingState().getName()));
+            throw new InvalidCommandSyntaxException("No states given.");
         }
         
         String[] stateStrings = argument.split("(\\s+|,)+");
