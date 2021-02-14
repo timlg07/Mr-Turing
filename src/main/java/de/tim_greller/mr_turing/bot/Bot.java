@@ -16,6 +16,8 @@ import discord4j.core.event.ReactiveEventAdapter;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.presence.Activity;
+import discord4j.core.object.presence.Presence;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -82,7 +84,11 @@ public class Bot extends ReactiveEventAdapter {
      * events from it.
      */
     void login() {
-        client = DiscordClientBuilder.create(token).build().login().block();        
+        client = DiscordClientBuilder.create(token).build().login().block();
+        
+        client.updatePresence(Presence.online(
+                Activity.listening(prefix + " help"))).subscribe();
+        
         client.on(this).subscribe();
         client.onDisconnect().block();
     }
