@@ -16,7 +16,10 @@ import discord4j.core.event.ReactiveEventAdapter;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
+import discord4j.core.spec.EmbedCreateSpec;
+import discord4j.rest.util.Color;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -64,8 +67,15 @@ public class Bot extends ReactiveEventAdapter {
          * scope (in order to list all commands and their description), but is treated
          * like a normal command.
          */
-        BotCommand help = generateHelpCommand();
+        final BotCommand help = generateHelpCommand();
         commands.put(help.getCallName(), help);
+        
+        /*
+         * The same is done with the execute all command, which is used to execute
+         * multiple commands in one line.
+         */
+        final BotCommand execall = generateExecuteAllCommand();
+        commands.put(execall.getCallName(), execall);
     }
     
     /**
@@ -123,20 +133,37 @@ public class Bot extends ReactiveEventAdapter {
     private Publisher<?> parseAndExecute(Message message) 
             throws InvalidCommandSyntaxException {
         
-        final Snowflake channelId = message.getChannelId();
         final String content = message.getContent();
         final String contentWithoutPrefix = content.substring(prefix.length()).trim();
         
-        if (contentWithoutPrefix.length() == 0) {
+        return parseAndExecutePartly(message, contentWithoutPrefix);
+    }
+    
+    /**
+     * Takes a command-line that should be interpreted and executed.
+     * 
+     * @param commandline The string that will be interpreted as command.
+     * @param message The message which will be used to determine the referenced TM.
+     * @return The publisher that completes when the called command has finished 
+     *            execution.
+     * @throws InvalidCommandSyntaxException Thrown if the command-line does not contain a
+     *                                       command in a valid syntax.
+     */
+    private Publisher<?> parseAndExecutePartly(Message message, String commandline) 
+            throws InvalidCommandSyntaxException {
+        
+        final Snowflake channelId = message.getChannelId();
+        
+        if (commandline.isBlank()) {
             throw new InvalidCommandSyntaxException("No command provided.");
         }
         
         /*
-         * Each command has to be separated from its parameter(s) with a space. By
+         * Each command has to be separated from its parameter(s) with whitespace. By
          * splitting the content on the first space, we separate it into those two parts.
          * If the message contains no parameter, the array will only contain one element.
          */
-        final String[] commandParts = contentWithoutPrefix.trim().split(" ", 2);        
+        final String[] commandParts = commandline.trim().split("[\s\r\n]+", 2);        
         final String commandName = commandParts[0].toLowerCase();
         String commandParameter = ""; 
         
@@ -160,6 +187,46 @@ public class Bot extends ReactiveEventAdapter {
         return command.execute(message, commandParameter, tm);
     }
     
+    private BotCommand generateExecuteAllCommand() {
+        return new BotCommand() {
+
+            @Override
+            public String getTitle() {
+                return "Execute all given commands";
+            }
+
+            @Override
+            public String getDescription() {
+                return "With this command you can put multiple commands in one message, "
+                        + "each one in its individual line. They will be parsed one "
+                        + "after another.\nUsing execute all, you can define a whole "
+                        + "Turing machine using one message, making it easy to save and "
+                        + "share your creations!";
+            }
+
+            @Override
+            public String getCallName() {
+                return "execute";
+            }
+
+            @Override
+            public Publisher<?> execute(Message msg, String arg, TuringMachine tm)
+                    throws InvalidCommandSyntaxException {
+                
+                Publisher<?> combinedPublisher = Mono.empty();
+                
+                for (String cmdln : arg.split("(\s*[\r\n]\s*)+")) {
+                    combinedPublisher = Flux.concat(
+                            Bot.this.parseAndExecutePartly(msg, cmdln), 
+                            combinedPublisher
+                    );
+                }
+                
+                return combinedPublisher;
+            }
+        };
+    }
+    
     /**
      * Generates the help command of this bot. The command will provide information about
      * the bot and its usage.
@@ -168,6 +235,7 @@ public class Bot extends ReactiveEventAdapter {
      */
     private BotCommand generateHelpCommand() {
         return new BotCommand() {
+            
             @Override
             public String getTitle() { return "Help"; }
             
@@ -180,7 +248,7 @@ public class Bot extends ReactiveEventAdapter {
             @Override
             public Publisher<?> execute(Message msg, String arg, TuringMachine tm) {
                 return msg.getChannel().flatMap(channel -> {
-                    return channel.createMessage(Bot.this.generateHelpText());
+                    return channel.createEmbed(Bot.this::generateHelpEmbed);
                 });
             }
         };
@@ -192,22 +260,23 @@ public class Bot extends ReactiveEventAdapter {
      * 
      * @return The help text (uses Discords markdown styling).
      */
-    private String generateHelpText() {
-        final StringBuilder helpText = new StringBuilder();
+    private EmbedCreateSpec generateHelpEmbed(EmbedCreateSpec spec) {
         final String username = client.getSelf().block().getUsername();
-        final String newListItem = "\n\n";
         
-        helpText.append("Hello. I am ").append(username)
-                .append(".\nYou can use me with the prefix \"").append(prefix)
-                .append("\" and the following commands:");
+        spec.setTitle("Hello. I am " + username);
+        spec.setUrl("https://github.com/timlg07/Mr-Turing");
+        spec.setDescription("You can use me with the prefix \"" 
+                            + prefix + "\" and the following commands:");
         
         commands.forEach((name, command) -> {
-            helpText.append(newListItem).append("**").append(command.getTitle())
-                    .append("** (`").append(name).append("`)\n")
-                    .append(command.getDescription());
+            spec.addField(
+                    command.getTitle() + " (`" + name + "`)", 
+                    command.getDescription(), 
+                    false
+            );
         });
         
-        return helpText.toString();
+        return spec;
     }
     
     @Override

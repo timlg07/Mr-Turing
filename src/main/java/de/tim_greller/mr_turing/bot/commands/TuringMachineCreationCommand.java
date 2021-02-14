@@ -19,9 +19,8 @@ public class TuringMachineCreationCommand implements BotCommand {
 
     @Override
     public String getDescription() {
-        return "Creates a new Turing Machine. You need to use this command before you can"
-               + " configure the Turing machine. If a Turing machine was created on this "
-               + "channel before, the old one will get deleted.";
+        return "Creates a new modifiable Turing Machine. If a Turing machine was created "
+                + "on this channel before, the old one will get deleted.";
     }
 
     @Override
@@ -31,7 +30,8 @@ public class TuringMachineCreationCommand implements BotCommand {
 
     @Override
     public Publisher<?> execute(Message msg, String arg, TuringMachine tm) {
-        return Mono.fromRunnable(tm::clear);
+        tm.clear();
+        return Mono.empty();
     }
 
 }
