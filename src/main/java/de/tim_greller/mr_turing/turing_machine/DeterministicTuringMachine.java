@@ -54,6 +54,7 @@ public class DeterministicTuringMachine implements TuringMachine {
     @Override
     public void clear() {
         status = TMState.MODIFIABLE;
+        tape = null;
         input.clear();
         transitions.clear();
         acceptingStates.clear();
