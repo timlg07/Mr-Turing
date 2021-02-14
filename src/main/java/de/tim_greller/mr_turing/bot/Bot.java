@@ -200,7 +200,8 @@ public class Bot extends ReactiveEventAdapter {
                         + "each one in its individual line. They will be parsed one "
                         + "after another.\nUsing execute all, you can define a whole "
                         + "Turing machine using one message, making it easy to save and "
-                        + "share your creations!";
+                        + "share your creations!\nYou can also wrap the commands in code"
+                        + "-blocks for better readability.";
             }
 
             @Override
@@ -215,6 +216,8 @@ public class Bot extends ReactiveEventAdapter {
                 Publisher<?> combinedPublisher = Mono.empty();
                 
                 for (String cmdln : arg.split("(\s*[\r\n]\s*)+")) {
+                    if (cmdln.equals("```")) continue;
+                    
                     combinedPublisher = Flux.concat(
                             Bot.this.parseAndExecutePartly(msg, cmdln), 
                             combinedPublisher

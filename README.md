@@ -36,8 +36,13 @@ These are all commands the bot supports. You can get this list on Discord anytim
 Creates a new modifiable Turing Machine. If a Turing machine was created on this channel before, the old one will get deleted.
 
 - **Add Transition** (`add`)  
-Creates a new transition and adds it to the Turing machine.
-A transition has to be in this form: (currentState, scannedSymbol) -> (nextState, printSymbol, tapeMotion) with TapeMotion being either left, right or none.
+Creates a new transition and adds it to the Turing machine.  
+A transition has to be in this form: 
+```
+(currentState, scannedSymbol) -> (nextState, printSymbol, tapeMotion)
+```
+with TapeMotion being either left, right or none.
+
 
 - **Build Turing machine** (`build`)  
 Builds the Turing machine using the defined data. Once a TM was built, it can no longer be modified. If data like initial/accepting states or the blank symbol was not specified, the default will be used.
@@ -52,8 +57,9 @@ Executes the Turing machine until it terminates.
 Prints out the current configuration, including the state, tape content and head position of the Turing machine.
 
 - **Execute all given commands** (`execute`)  
-With this command you can put multiple commands in one message, each one in its individual line. They will be parsed one after another.
-Using execute all, you can define a whole Turing machine using one message, making it easy to save and share your creations!
+With this command you can put multiple commands in one message, each one in its individual line. They will be parsed one after another.  
+Using execute all, you can define a whole Turing machine using one message, making it easy to save and share your creations!  
+You can also wrap the commands in code-blocks for better readability.
 
 - **Set Input** (`input`)  
 Sets the input of a Turing machine. The given string will be written to the TMs tape when the TM is build.
