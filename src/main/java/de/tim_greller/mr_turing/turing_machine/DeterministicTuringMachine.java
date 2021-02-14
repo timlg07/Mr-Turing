@@ -17,7 +17,7 @@ public class DeterministicTuringMachine implements TuringMachine {
      * if not, if it terminated in an accepting or denying state or if it is currently
      * modifiable.
      */
-    private TMState status;
+    private TMState status = TMState.MODIFIABLE;
     
     /** 
      * The current state of the automata/machine. 
