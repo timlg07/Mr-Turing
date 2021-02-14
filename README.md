@@ -15,9 +15,18 @@ A Bot which can compute anything that is computable?
 A Discord bot, that can and will solve any physically computable problem.  
 A Discord bot, that can simulate Turing machines.  
 
+### **Table of Contents**  
+- **[How to use](#howtouse)**  
+- **[Commands](#commands)**  
+- **[Defaults](#defaults)**  
+- **[Examples](#examples)**  
+- **[Screenshots](#screenshots)**
 
-## How to use
-### Invite the bot to your server
+
+<a name="howtouse"/>
+
+# How to use
+## Invite the bot to your server
 You can use this invite link to add my instance of this bot to your Discord server:  
 [discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot](https://discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot)  
 
@@ -26,25 +35,28 @@ You can also try it out on the #mr-turing channel on my server here:
 
 The prefix of the bot is `!tm`.  
 
-### Run your own instance
+## Run your own instance
 You can run this bot using the gradle wrapper included in this repository with a valid token as argument:
 ```cmd
 gradlew run --args="bot_token"
 ```
 
-## Commands
+
+<a name="commands"/>
+
+# Commands
 These are all commands the bot supports. You can get this list on Discord anytime by using the `help`-command.
 
 - **New Turing machine** (`new`)  
 Creates a new modifiable Turing Machine. If a Turing machine was created on this channel before, the old one will get deleted.
 
 - **Add Transition** (`add`)  
-Creates a new transition and adds it to the Turing machine.  
-A transition has to be in this form: 
-```
-(currentState, scannedSymbol) -> (nextState, printSymbol, tapeMotion)
-```
-with TapeMotion being either left, right or none.
+  Creates a new transition and adds it to the Turing machine.  
+  A transition has to be in this form: 
+  ```
+  (currentState, scannedSymbol) -> (nextState, printSymbol, tapeMotion)
+  ```
+  with TapeMotion being either left, right or none.
 
 
 - **Build Turing machine** (`build`)  
@@ -76,15 +88,21 @@ If the Turing machine is in one of the given states, it accepts. The states must
 - **Help** (`help`)  
 Shows this help text.
 
-## Defaults
+
+<a name="defaults"/>
+
+# Defaults
 If you do not specify otherwise, the Turing machine uses these default values:
 - Initial state `S`
 - Accepting state `F`
 - Blank symbol `_`
 - Empty input string
 
-## Examples
-### Invert a binary string
+
+<a name="examples"/>
+
+# Examples
+## Invert a binary string
 This is a simple Turing machine that accepts a binary input consisting of `0`s and `1`s and inverts this binary string. Means it replaces all `0`s with `1`s and vice versa.  
 
 You can build the Turing machine with this command:
@@ -120,5 +138,8 @@ add (q2, _) -> (F,  y, N)
 run
 ```
 
-## Screenshots
+
+<a name="screenshots"/>
+
+# Screenshots
 ![A basic example that accepts a string of a's and replaces them with b's](img/Screenshot.png)
