@@ -1,5 +1,20 @@
-# Mr-Turing
-A Discord Bot simulating Turing Machines.
+# Mr. Turing
+
+There are many Discord bots out there.  
+And they can do impressive things:  
+they help you by providing reminders,  
+they calculate difficult arithmetic expressions for you,  
+they can play games like TicTacToe or chess against you.  
+
+But what about a Discord bot, that can do everything?  
+What about a Discord Bot, which can solve any solvable problem?  
+A Bot which can compute anything that is computable?  
+
+**This** is Mr. Turing™  
+
+A Discord bot, that can and will solve any physically computable problem.  
+A Discord bot, that can simulate Turing machines.  
+
 
 ## How to use
 ### Invite the bot to your server
@@ -82,8 +97,8 @@ The following Turing machine is a very simple machine that just writes a hardcod
 ```
 !tm execute
 new
-add (S, _) -> (q1, H, R)
+add (S,  _) -> (q1, H, R)
 add (q1, _) -> (q2, e, R)
-add (q2, _) -> (F, y, N)
+add (q2, _) -> (F,  y, N)
 run
 ```
