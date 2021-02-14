@@ -21,6 +21,9 @@ A Discord bot, that can simulate Turing machines.
 You can use this invite link to add my instance of this bot to your Discord server:  
 [discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot](https://discord.com/oauth2/authorize?client_id=803325974582132736&permissions=2112&scope=bot)  
 
+You can also try it out on the #mr-turing channel on my server here:  
+[discord.com/invite/xEWKC2zCzs](https://discord.com/invite/xEWKC2zCzs)  
+
 The prefix of the bot is `!tm`.  
 
 ### Run your own instance
@@ -116,3 +119,6 @@ add (q1, _) -> (q2, e, R)
 add (q2, _) -> (F,  y, N)
 run
 ```
+
+## Screenshots
+![A basic example that accepts a string of a's and replaces them with b's](img/Screenshot.png)
