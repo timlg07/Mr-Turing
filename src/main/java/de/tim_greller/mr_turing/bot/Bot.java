@@ -16,7 +16,6 @@ import discord4j.core.event.ReactiveEventAdapter;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -315,7 +314,11 @@ public class Bot extends ReactiveEventAdapter {
             return Flux.concat(
                     message.addReaction(CROSS), 
                     message.getChannel().flatMap(c -> {
-                        return c.createMessage("**Error.** " + e.getMessage());
+                        return c.createEmbed(s -> 
+                                   s.setTitle("Error")
+                                    .setDescription(e.getMessage())
+                                    .setColor(Color.RED)
+                        );
                     })
             );
         }

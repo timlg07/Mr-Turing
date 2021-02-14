@@ -31,13 +31,12 @@ public final class TMFormatterUtils {
         final String resultingTape = formatWord(tm.getTapeContent(), "");
         
         if (tm.isAccepting()) {
-            return "The Turing machine accepted the input word \"" + originalInput 
+            return "It accepted the input word \"" + originalInput 
                     + "\".\n Its output was: \"" + resultingTape + "\".";
         }
         
         if (tm.isDenying()) {
-            return "The Turing machine terminated and did not accept the word \"" 
-                    + originalInput + "\".";
+            return "It did not accept the word \"" + originalInput + "\".";
         }
         
         return null;

@@ -6,6 +6,7 @@ import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
 import de.tim_greller.mr_turing.bot.TMFormatterUtils;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
+import discord4j.rest.util.Color;
 
 public class RunTuringMachineCommand implements BotCommand {
 
@@ -40,7 +41,13 @@ public class RunTuringMachineCommand implements BotCommand {
         } while (tm.isRunning());
 
         final String terminateMessage = TMFormatterUtils.getTerminationMessageContent(tm);
-        return (message.getChannel().flatMap(c -> c.createMessage(terminateMessage)));
+        return message.getChannel().flatMap(
+                c -> c.createEmbed(s -> 
+                    s.setTitle("The Turing machine terminated.")
+                     .setDescription(terminateMessage)
+                     .setColor(Color.DISCORD_WHITE)
+                )
+        );
     }
 
 }
