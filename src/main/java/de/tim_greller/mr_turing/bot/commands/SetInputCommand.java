@@ -1,5 +1,8 @@
 package de.tim_greller.mr_turing.bot.commands;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.reactivestreams.Publisher;
 
 import de.tim_greller.mr_turing.bot.InvalidCommandSyntaxException;
@@ -29,7 +32,10 @@ public class SetInputCommand implements BotCommand {
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
 
-        tm.setInput(argument);
+        final Matcher quoteMatcher = Pattern.compile("\"(.+)\"").matcher(argument);
+        final String input = (quoteMatcher.find() ? quoteMatcher.group(1) : argument);
+        
+        tm.setInput(input);
         
         return Mono.empty();
     }
