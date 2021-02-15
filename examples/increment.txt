@@ -1,0 +1,16 @@
+// This Turing machine increments a given binary number by one.
+new
+
+// Go to the end of the binary String
+add (S,0) -> (S,0,R)
+add (S,1) -> (S,1,R)
+add (S,_) -> (Q,_,L)
+
+// If you find a 0, increase the number by making it a 1.
+add (Q,0) -> (F,1,N)
+
+// If we find a 1, we have an overflow and need to continue further to the left.
+add (Q,1) -> (Q,0,L)
+
+// If we want to support numbers which will have an extra bit after increasing them, we can do something like this:
+add (Q,_) -> (F,1,N)

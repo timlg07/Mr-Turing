@@ -1,0 +1,5 @@
+// This Turing machine writes the string "Hey" to the tape
+new
+add (S,  _) -> (q1, H, R)
+add (q1, _) -> (q2, e, R)
+add (q2, _) -> (F,  y, N)
