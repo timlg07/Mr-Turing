@@ -237,8 +237,8 @@ public class Bot extends ReactiveEventAdapter {
                  */
                 for (String cmdln : arg.split("(\s*[\r\n]\s*)+")) {
                     
-                    // Skips lines consisting of code-block endings or beginnings.
-                    if (cmdln.equals("```")) continue;
+                    // Skips code-block endings or beginnings and comments.
+                    if (cmdln.equals("```") || cmdln.startsWith("//")) continue;
                     
                     combinedPublisher = Flux.concat(
                             combinedPublisher,

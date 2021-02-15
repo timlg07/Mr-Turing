@@ -143,3 +143,4 @@ run
 
 # Screenshots
 ![A basic example that accepts a string of a's and replaces them with b's](img/Screenshot.png)
+![A turing machine that increases a given number by one](img/Screenshot2.png)
