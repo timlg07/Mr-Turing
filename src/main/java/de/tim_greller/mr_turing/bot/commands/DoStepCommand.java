@@ -35,8 +35,10 @@ public class DoStepCommand implements BotCommand {
         
         if (tm.isUnbuilt()) {
             tm.build();
-            message.getChannel().flatMap(
-                    c -> c.createMessage("Executed Turing machine build automatically.")
+            message.getChannel().flatMap(c -> c.createEmbed(s -> 
+                    s.setTitle("Info")
+                     .setDescription("Executed Turing machine build automatically.")
+                     .setColor(Color.YELLOW))
             ).block();
         }
 
