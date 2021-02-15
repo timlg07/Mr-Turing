@@ -1,19 +1,19 @@
 # Mr. Turing
 
-There are many Discord bots out there.  
-And they can do impressive things:  
+There are many Discord bots out there,  
+and they can do impressive things:  
 they help you by providing reminders,  
 they calculate difficult arithmetic expressions for you,  
 they can play games like TicTacToe or chess against you.  
 
-But what about a Discord bot, that can do everything?  
-What about a Discord Bot, which can solve any solvable problem?  
+But what about a Discord bot that can do everything?  
+What about a Discord Bot which can solve any solvable problem?  
 A Bot which can compute anything that is computable?  
 
 **This** is Mr. Turing™  
 
-A Discord bot, that can and will solve any physically computable problem.  
-A Discord bot, that can simulate Turing machines.  
+A Discord bot that can and will solve any physically computable problem.  
+A Discord bot that can simulate Turing machines.  
 
 ### **Table of Contents**  
 - **[How to use](#howtouse)**  
@@ -77,7 +77,7 @@ Using execute all, you can define a whole Turing machine using one message, maki
 You can also wrap the commands in code-blocks for better readability.
 
 - **Set Input** (`input`)  
-Sets the input of a Turing machine. The given string will be written to the TMs tape when the TM is build.
+Sets the input of a Turing machine. The given string will be written to the TMs tape when the TM is built.
 
 - **Set the blank symbol** (`blank`)  
 Sets the blank symbol with which the initial empty tape will be filled.
@@ -103,7 +103,7 @@ If you do not specify otherwise, the Turing machine uses these default values:
 
 # Examples
 ## Invert a binary string
-This is a simple Turing machine that accepts a binary input consisting of `0`s and `1`s and inverts this binary string. Means it replaces all `0`s with `1`s and vice versa.  
+This is a simple Turing machine that accepts a binary input consisting of `0`s and `1`s and inverts this binary string. Meaning it replaces all `0`s with `1`s and vice versa.  
 
 You can build the Turing machine with this command:
 ```
@@ -121,7 +121,7 @@ Finally you can execute the Turing machine. You can do that step by step and che
 ```
 !tm run
 ```
-**Explaination:**  
+**Explanation:**  
 The Turing machine starts in the initial State `S`.  
 If it reads a `0`, it writes a `1` to the tape and moves one symbol to the right. This is the first transition we define. The second transition does the same, except it accepts the `1` and replaces it with a `0`.  
 The third transition reads the default blank symbol `_`, meaning we reached the end of the input string, and therefore goes into the default accepting state `F`.  
