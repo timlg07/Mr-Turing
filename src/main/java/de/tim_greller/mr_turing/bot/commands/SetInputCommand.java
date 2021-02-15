@@ -10,6 +10,9 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
+/**
+ * This command is used to set the input string of the Turing machine.
+ */
 public class SetInputCommand implements BotCommand {
 
     @Override

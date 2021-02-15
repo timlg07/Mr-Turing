@@ -192,6 +192,12 @@ public class Bot extends ReactiveEventAdapter {
         return command.execute(message, commandParameter, tm);
     }
     
+    /**
+     * Generates the execute-all command, which is able to execute multiple commands
+     * included in one message.
+     * 
+     * @return The execute-all command.
+     */
     private BotCommand generateExecuteAllCommand() {
         return new BotCommand() {
 
@@ -219,9 +225,19 @@ public class Bot extends ReactiveEventAdapter {
             public Publisher<?> execute(Message msg, String arg, TuringMachine tm)
                     throws InvalidCommandSyntaxException {
                 
+                /*
+                 * This publisher is used to concatenate all possibly generated Publishers
+                 * of the executed commands.
+                 */
                 Publisher<?> combinedPublisher = Mono.empty();
                 
+                /*
+                 * Splits the argument on each new line and ignores blank lines; then
+                 * executes each line individually.
+                 */
                 for (String cmdln : arg.split("(\s*[\r\n]\s*)+")) {
+                    
+                    // Skips lines consisting of code-block endings or beginnings.
                     if (cmdln.equals("```")) continue;
                     
                     combinedPublisher = Flux.concat(

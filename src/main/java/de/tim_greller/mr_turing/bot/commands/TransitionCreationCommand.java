@@ -15,8 +15,7 @@ import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
 /**
- * This command creates a new transition to the current turing machine hold by the 
- * {@link TuringMachineManager}.
+ * This command creates a new transition and adds it to the Turing machine.
  */
 public class TransitionCreationCommand implements BotCommand {
 

@@ -10,7 +10,11 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
+/**
+ * This command enables the definition of custom accepting states.
+ */
 public class SetAcceptingStatesCommand implements BotCommand {
+    
     @Override
     public String getTitle() {
         return "Define the set of final, accepting states";

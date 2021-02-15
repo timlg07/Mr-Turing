@@ -7,6 +7,9 @@ import de.tim_greller.mr_turing.bot.TMFormatterUtils;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 
+/**
+ * This command is used to print the current configuration of the Turing machine.
+ */
 public class PrintConfigurationCommand implements BotCommand {
 
     @Override

@@ -8,6 +8,9 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import discord4j.rest.util.Color;
 
+/**
+ * This command runs a Turing machine until it terminates.
+ */
 public class RunTuringMachineCommand implements BotCommand {
 
     @Override

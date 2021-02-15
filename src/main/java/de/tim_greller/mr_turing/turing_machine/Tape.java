@@ -14,6 +14,11 @@ public class Tape {
     /** The cell on which the header is currently pointing at. */
     private TapeCell currentCell;
     
+    /**
+     * Creates a new Tape, which is initially filled with the given {@link BlankSymbol}.
+     * 
+     * @param blank The blank symbol which will be on every position of the tape.
+     */
     public Tape(BlankSymbol blank) {
         this.blank = blank;
         currentCell = new TapeCell(blank);

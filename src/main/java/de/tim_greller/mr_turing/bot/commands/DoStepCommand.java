@@ -9,6 +9,9 @@ import discord4j.core.object.entity.Message;
 import discord4j.rest.util.Color;
 import reactor.core.publisher.Mono;
 
+/**
+ * This command executes a single computation step of the Turing machine.
+ */
 public class DoStepCommand implements BotCommand {
 
     @Override

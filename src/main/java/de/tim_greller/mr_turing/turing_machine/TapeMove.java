@@ -6,7 +6,7 @@ package de.tim_greller.mr_turing.turing_machine;
  */
 public enum TapeMove {
 
-    /**    Moves the head one cell to the left. */
+    /** Moves the head one cell to the left. */
     LEFT, 
     
     /** Does not move the head. */

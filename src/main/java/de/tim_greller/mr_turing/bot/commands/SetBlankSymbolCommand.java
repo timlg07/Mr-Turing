@@ -11,6 +11,9 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
+/**
+ * This command can be used to set a custom blank symbol.
+ */
 public class SetBlankSymbolCommand implements BotCommand {
 
     @Override

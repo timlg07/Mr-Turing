@@ -7,6 +7,10 @@ import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
+/**
+ * This command is used to build a Turing machine, making it executable instead of
+ * modifiable.
+ */
 public class BuildTuringMachineCommand implements BotCommand {
 
     @Override
