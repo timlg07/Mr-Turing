@@ -327,7 +327,8 @@ public class Bot extends ReactiveEventAdapter {
              * Parse and execute the message and - if successful - react with the
              * checkmark. Then return the concatenation of both publishers.
              */
-            return Flux.concat(parseAndExecute(message), message.addReaction(CHECKMARK));
+            Publisher<?> possibleResponse = parseAndExecute(message);
+            return Flux.concat(message.addReaction(CHECKMARK), possibleResponse);
             
         } catch (InvalidCommandSyntaxException | IllegalArgumentException 
                 | IllegalStateException e) {

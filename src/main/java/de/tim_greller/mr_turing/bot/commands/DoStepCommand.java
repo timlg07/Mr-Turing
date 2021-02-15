@@ -7,6 +7,7 @@ import de.tim_greller.mr_turing.bot.TMFormatterUtils;
 import de.tim_greller.mr_turing.turing_machine.TuringMachine;
 import discord4j.core.object.entity.Message;
 import discord4j.rest.util.Color;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -33,29 +34,29 @@ public class DoStepCommand implements BotCommand {
     public Publisher<?> execute(Message message, String argument, TuringMachine tm)
             throws InvalidCommandSyntaxException {
         
+        Publisher<?> infoMessage = Mono.empty();
+        
         if (tm.isUnbuilt()) {
             tm.build();
-            message.getChannel().flatMap(c -> c.createEmbed(s -> 
+            infoMessage = message.getChannel().flatMap(c -> c.createEmbed(s -> 
                     s.setTitle("Info")
                      .setDescription("Executed Turing machine build automatically.")
-                     .setColor(Color.YELLOW))
-            ).block();
+                     .setColor(Color.YELLOW)));
         }
 
         tm.performStep();
         
         final String terminateMessage = TMFormatterUtils.getTerminationMessageContent(tm);
         if (terminateMessage != null) {
-            return message.getChannel().flatMap(
+            return Flux.concat(infoMessage, message.getChannel().flatMap(
                     c -> c.createEmbed(s -> 
                         s.setTitle("The Turing machine terminated.")
                          .setDescription(terminateMessage)
                          .setColor(Color.DISCORD_WHITE)
-                    )
-            );
+                    )));
         }
         
-        return Mono.empty();
+        return infoMessage;
     }
 
 }
