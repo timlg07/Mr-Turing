@@ -39,7 +39,7 @@ public class PrintConfigurationCommand implements BotCommand {
         return message.getChannel().flatMap(c -> 
                 c.createEmbed(s ->
                     s.setTitle("The current configuration of the Turing machine:")
-                     .addField("Tape content:", "`" + tapeContent + "`", true)
+                     .addField("Tape content:", "```" + tapeContent.trim() + "```", true)
                      .addField("Head index:", "`" + headIndex + "`", true)
                      .addField("Current state:", "`" + currentState + "`", true)
                 )
