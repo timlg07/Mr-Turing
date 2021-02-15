@@ -39,7 +39,7 @@ public class Main {
             new BuildTuringMachineCommand(),
             new PrintConfigurationCommand(),
             new DoStepCommand(),
-            new RunTuringMachineCommand(),
+            new RunTuringMachineCommand(200),
             new SetAcceptingStatesCommand(),
             new SetBlankSymbolCommand()
         );
